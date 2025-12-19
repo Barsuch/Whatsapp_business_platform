@@ -28,7 +28,7 @@ function post_to_server(postData) {
   const https = require('https');
 
   const options = {
-      hostname: 'https://e14b7836b308.ngrok-free.app',
+      hostname: 'e14b7836b308.ngrok-free.app',
       port: 443,
       path: '/hotel/emerald/hotel-admin/whatsapp/index.php',
       method: 'POST',
