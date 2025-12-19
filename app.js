@@ -28,12 +28,12 @@ function post_to_server(postData) {
   const https = require('https');
 
   const options = {
-      hostname: 'jsonplaceholder.typicode.com',
+      hostname: 'https://e14b7836b308.ngrok-free.app',
       port: 443,
-      path: '/posts',
+      path: '/hotel/emerald/hotel-admin/whatsapp/index.php',
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/text',
           'Content-Length': Buffer.byteLength(postData)
       }
   };
