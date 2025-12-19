@@ -48,7 +48,7 @@ function post_to_server(postData) {
       });
       
       res.on('end', () => {
-          console.log('Response:', JSON.parse(data));
+          console.log('Response:', data);
       });
   });
 
