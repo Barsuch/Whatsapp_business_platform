@@ -23,11 +23,50 @@ app.get('/', (req, res) => {
   }
 });
 
+//post to backend server function
+function post_to_server(postData) {
+  const https = require('https');
+
+  const options = {
+      hostname: 'jsonplaceholder.typicode.com',
+      port: 443,
+      path: '/posts',
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(postData)
+      }
+  };
+
+  const req = https.request(options, (res) => {
+      console.log(`Status: ${res.statusCode}`);
+      console.log(`Headers: ${JSON.stringify(res.headers)}`);
+      
+      let data = '';
+      res.on('data', (chunk) => {
+          data += chunk;
+      });
+      
+      res.on('end', () => {
+          console.log('Response:', JSON.parse(data));
+      });
+  });
+
+  req.on('error', (error) => {
+      console.error('Request error:', error);
+  });
+
+  req.write(postData);
+  req.end();
+}
+
 // Route for POST requests
 app.post('/', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   console.log(`\n\nWebhook received ${timestamp}\n`);
-  console.log(JSON.stringify(req.body, null, 2));
+  var hooked = JSON.stringify(req.body, null, 2);
+  console.log(hooked);
+  post_to_server(hooked);
   res.status(200).end();
 });
 
