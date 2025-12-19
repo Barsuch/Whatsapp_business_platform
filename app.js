@@ -33,7 +33,7 @@ function post_to_server(postData) {
       path: '/hotel/emerald/hotel-admin/whatsapp/index.php',
       method: 'POST',
       headers: {
-          'Content-Type': 'application/text',
+          'Content-Type': 'application/json',
           'Content-Length': Buffer.byteLength(postData)
       }
   };
