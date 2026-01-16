@@ -65,9 +65,8 @@ app.post('/', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   console.log(`\n\nWebhook received ${timestamp}\n`);
   //var hooked = JSON.stringify(req.body, null, 2);
-  var hooked = req.body;
-  console.log("webhooked success length:"+hooked.length);
-  post_to_server(hooked);
+  console.log("webhooked success length:"+req.body.length);
+  post_to_server(req.body);
   res.status(200).end();
 });
 
