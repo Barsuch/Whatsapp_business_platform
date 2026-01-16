@@ -29,6 +29,7 @@ function post_to_server(postData) {
   
   // Convert to JSON string
   const jsonData = JSON.stringify(postData);
+  console.log("webhooked success length:"+jsonData.length);
   
   const options = {
       hostname: '201d2636b4db.ngrok-free.app',
@@ -66,7 +67,6 @@ function post_to_server(postData) {
 app.post('/', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   console.log(`\n\nWebhook received ${timestamp}\n`);
-  console.log("webhooked success length:"+hooked.length);
   post_to_server(req.body);
   res.status(200).end();
 });
