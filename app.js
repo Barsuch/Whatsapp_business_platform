@@ -26,21 +26,23 @@ app.get('/', (req, res) => {
 //post to backend server function
 function post_to_server(postData) {
   const https = require('https');
-
+  
+  // Convert to JSON string
+  const jsonData = JSON.stringify(postData);
+  
   const options = {
       hostname: '201d2636b4db.ngrok-free.app',
       port: 443,
       path: '/hotel/emerald/hotel-admin/whatsapp/index.php',
       method: 'POST',
       headers: {
-          'Content-Type': 'application/text',
-          'Content-Length': Buffer.byteLength(postData)
+          'Content-Type': 'application/json', // Changed from application/text
+          'Content-Length': Buffer.byteLength(jsonData)
       }
   };
 
   const req = https.request(options, (res) => {
       console.log(`Status: ${res.statusCode}`);
-      console.log(`Headers: ${JSON.stringify(res.headers)}`);
       
       let data = '';
       res.on('data', (chunk) => {
@@ -48,7 +50,7 @@ function post_to_server(postData) {
       });
       
       res.on('end', () => {
-          console.log('Response:', data);
+          console.log('PHP Response:', data);
       });
   });
 
@@ -56,7 +58,7 @@ function post_to_server(postData) {
       console.error('Request error:', error);
   });
 
-  req.write(postData);
+  req.write(jsonData); // Send JSON string
   req.end();
 }
 
@@ -64,7 +66,6 @@ function post_to_server(postData) {
 app.post('/', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   console.log(`\n\nWebhook received ${timestamp}\n`);
-  var hooked = JSON.stringify(req.body, null, 2);
   console.log("webhooked success length:"+hooked.length);
   post_to_server(req.body);
   res.status(200).end();
