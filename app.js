@@ -34,7 +34,7 @@ function post_to_server(postData) {
   const options = {
       hostname: 'www.consoltech.co.ke',
       port: 443,
-      path: 'APIs/WhatsappBiz/index.php',
+      path: '/APIs/WhatsappBiz/index.php',
       method: 'POST',
       headers: {
           'Content-Type': 'application/json', // Changed from application/text
