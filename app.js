@@ -32,9 +32,9 @@ function post_to_server(postData) {
   console.log("webhooked success length:"+jsonData.length);
   
   const options = {
-      hostname: '2850-41-139-177-123.ngrok-free.app',
+      hostname: 'www.consoltech.co.ke',
       port: 443,
-      path: '/hotel/emerald/hotel-admin/whatsapp/index.php',
+      path: 'APIs/WhatsappBiz/index.php',
       method: 'POST',
       headers: {
           'Content-Type': 'application/json', // Changed from application/text
