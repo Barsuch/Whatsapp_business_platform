@@ -1,3 +1,4 @@
+
 // Import Express.js
 const express = require('express');
 
@@ -26,40 +27,83 @@ app.get('/', (req, res) => {
 //post to backend server function
 function post_to_server(postData) {
   const https = require('https');
-  
-  // Convert to JSON string
   const jsonData = JSON.stringify(postData);
-  console.log("webhooked success length:"+jsonData.length);
+  console.log("webhooked success length:" + jsonData.length);
   
-  const options = {
-      hostname: 'www.consoltech.co.ke',
+  // Map Phone Number IDs to destination configurations
+  const phoneNumberConfigs = {
+    "1008222085716768": {  // Phone Number ID
+      name: 'consoltech_solutions_limited',
+      hostname: '3ebf-41-139-177-123.ngrok-free.app',
       port: 443,
-      path: '/APIs/WhatsappBiz/index.php',
+      path: '/whatsapp/whatsapp.php',
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json', // Changed from application/text
-          'Content-Length': Buffer.byteLength(jsonData)
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(jsonData)
       }
+    },
+    // Add more Phone Number IDs here
+    "15550100627": {  // Example for another phone number
+      name: 'another_client',
+      hostname: 'another-server.com',
+      port: 443,
+      path: '/api/webhook',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(jsonData)
+      }
+    }
   };
-
+  
+  // Extract the Phone Number ID from the webhook
+  const phoneNumberId = postData?.entry?.[0]?.changes?.[0]?.value?.metadata?.phone_number_id;
+  
+  if (!phoneNumberId) {
+    console.error("Could not extract phone_number_id from webhook");
+    return;
+  }
+  
+  console.log(`Looking up configuration for phone_number_id: ${phoneNumberId}`);
+  
+  // Find configuration for this phone number
+  const targetConfig = phoneNumberConfigs[phoneNumberId];
+  
+  if (!targetConfig) {
+    console.warn(`No configuration found for phone_number_id: ${phoneNumberId}`);
+    console.log(`Available phone numbers: ${Object.keys(phoneNumberConfigs).join(', ')}`);
+    return;
+  }
+  
+  console.log(`Matched to: ${targetConfig.name}`);
+  console.log(`Sending to: ${targetConfig.hostname}${targetConfig.path}`);
+  
+  // Update headers with correct content-length for this request
+  const options = {
+    ...targetConfig,
+    headers: {
+      ...targetConfig.headers,
+      'Content-Length': Buffer.byteLength(jsonData)
+    }
+  };
+  
+  // Send the request
   const req = https.request(options, (res) => {
-      console.log(`Status: ${res.statusCode}`);
-      
-      let data = '';
-      res.on('data', (chunk) => {
-          data += chunk;
-      });
-      
-      res.on('end', () => {
-          console.log('PHP Response:', data);
-      });
+    console.log(`Status: ${res.statusCode}`);
+    
+    let data = '';
+    res.on('data', (chunk) => { data += chunk; });
+    res.on('end', () => {
+      console.log('Server Response:', data);
+    });
   });
-
+  
   req.on('error', (error) => {
-      console.error('Request error:', error);
+    console.error('Request error:', error.message);
   });
-
-  req.write(jsonData); // Send JSON string
+  
+  req.write(jsonData);
   req.end();
 }
 
@@ -75,6 +119,4 @@ app.post('/', (req, res) => {
 app.listen(port, () => {
   console.log(`\nListening on port ${port}\n`);
 });
-// Updated: 02/05/2026 17:44:46.35 
-// Updated: 02/05/2026 17:49:59.56 
-// Updated: 02/05/2026 17:51:47.67 
+// Updated: 02/05/2026 21:24:29.01 
