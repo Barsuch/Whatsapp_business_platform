@@ -29,6 +29,7 @@ function post_to_server(postData) {
   const https = require('https');
   const jsonData = JSON.stringify(postData);
   console.log("webhooked success length:" + jsonData.length);
+  console.log(jsonData);  
   
   // Map Phone Number IDs to destination configurations
   const phoneNumberConfigs = {
@@ -125,3 +126,4 @@ app.listen(port, () => {
 // Updated: 07/05/2026  5:31:21.69 
 // Updated: 07/05/2026  5:44:38.53 
 // Updated: 07/05/2026  5:54:54.79 
+// Updated: 07/05/2026 10:42:12.21 
