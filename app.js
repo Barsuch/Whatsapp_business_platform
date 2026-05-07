@@ -92,6 +92,9 @@ function post_to_server(postData) {
   
   req.on('error', (error) => {
     console.error('Request error:', error.message);
+    console.error('Request destination:', `${targetConfig.hostname}${targetConfig.path}`);
+    console.error('Request headers:', JSON.stringify(targetConfig.headers, null, 2));
+    console.error('Request body:', jsonData);
   });
   
   req.write(jsonData);
@@ -112,3 +115,4 @@ app.listen(port, () => {
 });
 // Updated: 02/05/2026 21:24:29.01 
 // Updated: 07/05/2026  5:31:21.69 
+// Updated: 07/05/2026  5:44:38.53 
