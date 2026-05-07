@@ -34,7 +34,7 @@ function post_to_server(postData) {
   const phoneNumberConfigs = {
     "1008222085716768": {  // Phone Number ID
       name: 'consoltech_solutions_limited',
-      hostname: '3ebf-41-139-177-123.ngrok-free.app',
+      hostname: '3a11-105-161-224-70.ngrok-free.app',
       port: 443,
       path: '/whatsapp/whatsapp.php',
       method: 'POST',
@@ -79,17 +79,8 @@ function post_to_server(postData) {
   console.log(`Matched to: ${targetConfig.name}`);
   console.log(`Sending to: ${targetConfig.hostname}${targetConfig.path}`);
   
-  // Update headers with correct content-length for this request
-  const options = {
-    ...targetConfig,
-    headers: {
-      ...targetConfig.headers,
-      'Content-Length': Buffer.byteLength(jsonData)
-    }
-  };
-  
   // Send the request
-  const req = https.request(options, (res) => {
+  const req = https.request(targetConfig.headers, (res) => {
     console.log(`Status: ${res.statusCode}`);
     
     let data = '';
@@ -120,3 +111,4 @@ app.listen(port, () => {
   console.log(`\nListening on port ${port}\n`);
 });
 // Updated: 02/05/2026 21:24:29.01 
+// Updated: 07/05/2026  5:31:21.69 
