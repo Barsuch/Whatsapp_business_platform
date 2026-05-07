@@ -79,8 +79,16 @@ function post_to_server(postData) {
   console.log(`Matched to: ${targetConfig.name}`);
   console.log(`Sending to: ${targetConfig.hostname}${targetConfig.path}`);
   
+  const options = {
+    hostname: targetConfig.hostname,
+    port: targetConfig.port,
+    path: targetConfig.path,
+    method: targetConfig.method,
+    headers: targetConfig.headers
+  };
+
   // Send the request
-  const req = https.request(targetConfig.headers, (res) => {
+  const req = https.request(options, (res) => {
     console.log(`Status: ${res.statusCode}`);
     
     let data = '';
@@ -116,3 +124,4 @@ app.listen(port, () => {
 // Updated: 02/05/2026 21:24:29.01 
 // Updated: 07/05/2026  5:31:21.69 
 // Updated: 07/05/2026  5:44:38.53 
+// Updated: 07/05/2026  5:54:54.79 
