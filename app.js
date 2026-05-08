@@ -1,4 +1,3 @@
-
 // Import Express.js
 const express = require('express');
 
@@ -35,9 +34,9 @@ function post_to_server(postData) {
   const phoneNumberConfigs = {
     "1008222085716768": {  // Phone Number ID
       name: 'consoltech_solutions_limited',
-      hostname: '3a11-105-161-224-70.ngrok-free.app',
+      hostname: 'www.consoltech.co.ke',
       port: 443,
-      path: '/whatsapp/whatsapp.php',
+      path: '/APIs/WhatsappBiz/whatsapp.php',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -47,9 +46,9 @@ function post_to_server(postData) {
     // Add more Phone Number IDs here
     "15550100627": {  // Example for another phone number
       name: 'another_client',
-      hostname: 'another-server.com',
+      hostname: '3a11-105-161-224-70.ngrok-free.app',
       port: 443,
-      path: '/api/webhook',
+      path: '/whatsapp/whatsapp.php',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -127,3 +126,4 @@ app.listen(port, () => {
 // Updated: 07/05/2026  5:44:38.53 
 // Updated: 07/05/2026  5:54:54.79 
 // Updated: 07/05/2026 10:42:12.21 
+// Updated: 08/05/2026 18:10:47.91 
